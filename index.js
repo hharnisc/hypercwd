@@ -18,8 +18,8 @@ const setCwd = (pid) =>
 
 exports.middleware = (store) => (next) => (action) => {
   switch (action.type) {
-    case 'SESSION_ADD_DATA':
-      if (curPid) setCwd(curPid);
+    case 'SESSION_PTY_DATA':
+      if (curPid && uids[action.uid] === curPid) setCwd(curPid);
       break;
     case 'SESSION_ADD':
       uids[action.uid] = action.pid;
