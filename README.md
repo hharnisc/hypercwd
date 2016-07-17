@@ -2,7 +2,7 @@
 
 Opens new tabs with the same directory as the current tab in HyperTerm
 
-![New Tabs](newTabs.gif)
+![New Tabs](https://raw.githubusercontent.com/hharnisc/hypercwd/master/newTabs.gif)
 
 ## Installation
 
