@@ -10,7 +10,7 @@ const setCwd = (pid) =>
     } else {
       cwd = cwd.trim();
       store.dispatch({
-        type: 'UPDATE_CWD',
+        type: 'SESSION_SET_CWD',
         cwd
       });
     }
@@ -38,12 +38,4 @@ exports.middleware = (store) => (next) => (action) => {
       break;
   }
   next(action);
-};
-
-exports.reduceUI = (state, action) => {
-  switch (action.type) {
-    case 'UPDATE_CWD':
-      return state.set('cwd', action.cwd);
-  }
-  return state;
 };
