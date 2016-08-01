@@ -1,6 +1,6 @@
 {
   "name": "hypercwd",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Open a HyperTerm tab with the same directory as the current tab",
   "main": "index.js",
   "keywords": [
