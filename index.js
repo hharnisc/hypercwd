@@ -4,7 +4,7 @@ let curPid;
 let uids = {};
 
 const setCwd = (pid) =>
-  exec(`lsof -p ${pid} | grep cwd | awk '$4 == "cwd" {print $9}'`, (err, cwd) => {
+  exec(`lsof -p ${pid} | grep cwd | tr -s ' ' | cut -d ' ' -f9-`, (err, cwd) => {
     if (err) {
       console.error(err);
     } else {
