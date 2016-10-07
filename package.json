@@ -1,10 +1,10 @@
 {
   "name": "hypercwd",
   "version": "0.1.6",
-  "description": "Open a HyperTerm tab with the same directory as the current tab",
+  "description": "Open a Hyper tab with the same directory as the current tab",
   "main": "index.js",
   "keywords": [
-    "hyperterm",
+    "hyper",
     "cwd"
   ],
   "author": "Harrison Harnisch <hharnisc@gmail.com> (http://hharnisc.github.io)",
