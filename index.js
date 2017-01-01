@@ -1,4 +1,4 @@
-const {exec} = require('child_process');
+const { exec } = require('child_process');
 
 let curPid;
 let uids = {};
