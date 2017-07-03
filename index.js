@@ -28,14 +28,14 @@ const setCwd = (store, pid) => {
         if (curCwd !== cwd) {
           store.dispatch({
             type: 'SESSION_SET_CWD',
-            cwd,
+            cwd
           });
           curCwd = cwd;
         }
       }
     });
   }
-}
+};
 
 exports.middleware = (store) => (next) => (action) => {
   switch (action.type) {
