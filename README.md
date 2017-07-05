@@ -7,5 +7,5 @@ Opens new tabs with the same directory as the current tab in HyperTerm
 ## Installation
 
 Go to ~/.hyper_plugins
-Run npm install -save hyper
+Run npm install -save hypercwd
 Edit ~/.hyper.js and add 'hypercwd' to the plugins list
