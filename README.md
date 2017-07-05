@@ -6,4 +6,6 @@ Opens new tabs with the same directory as the current tab in HyperTerm
 
 ## Installation
 
-Open ~/.hyperterm.js and add `hypercwd` to the list of plugins.
+Go to ~/.hyper_plugins
+Run npm install -save hypercwd
+Edit ~/.hyper.js and add 'hypercwd' to the plugins list
