@@ -6,8 +6,8 @@ let uids = {};
 
 // for Windows support
 let currentDirectory;
-//second match group is to capture branch information from posh-git
-const directoryRegex = /([\w]:[\s\S]+)(\[.*\])?>/;
+//The final excluded character () is an odd character that was added to the end of the line by posh-hg/posh-git
+const directoryRegex = /([a-zA-Z]:[^\:\[\]\?\"\<\>\|]+)/mi;
 
 const setCwd = (store, pid) => {
   if (process.platform === 'win32') {
