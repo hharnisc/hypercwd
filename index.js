@@ -4,26 +4,47 @@ let curPid;
 let curCwd;
 let uids = {};
 
-const setCwd = (store, pid) =>
-  exec(`lsof -p ${pid} | grep cwd | tr -s ' ' | cut -d ' ' -f9-`, (err, newCwd) => {
-    if (err) {
-      console.error(err);
-    } else {
-      const cwd = newCwd.trim();
-      // keep track of curCwd internally
-      // protects against state tree changes
-      if (curCwd !== cwd) {
-        store.dispatch({
-          type: 'SESSION_SET_CWD',
-          cwd,
-        });
-        curCwd = cwd;
-      }
+// for Windows support
+let currentDirectory;
+//The final excluded character () is an odd character that was added to the end of the line by posh-hg/posh-git
+const directoryRegex = /([a-zA-Z]:[^\:\[\]\?\"\<\>\|]+)/mi;
+
+const setCwd = (store, pid) => {
+  if (process.platform === 'win32') {
+    if (currentDirectory) {
+      store.dispatch({
+        type: 'SESSION_SET_CWD',
+        cwd: currentDirectory
+      });
     }
-  });
+  } else {
+    exec(`lsof -p ${pid} | grep cwd | tr -s ' ' | cut -d ' ' -f9-`, (err, newCwd) => {
+      if (err) {
+        console.error(err);
+      } else {
+        const cwd = newCwd.trim();
+        // keep track of curCwd internally
+        // protects against state tree changes
+        if (curCwd !== cwd) {
+          store.dispatch({
+            type: 'SESSION_SET_CWD',
+            cwd
+          });
+          curCwd = cwd;
+        }
+      }
+    });
+  }
+};
 
 exports.middleware = (store) => (next) => (action) => {
   switch (action.type) {
+    case 'SESSION_ADD_DATA':
+      if (process.platform === 'win32' && directoryRegex.test(action.data)) {
+        currentDirectory = directoryRegex.exec(action.data)[1];
+        setCwd(store, curPid);
+      }
+      break;
     case 'SESSION_PTY_DATA':
       if (curPid && uids[action.uid] === curPid) setCwd(store, curPid);
       break;
