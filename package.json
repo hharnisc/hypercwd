@@ -1,6 +1,6 @@
 {
   "name": "hypercwd",
-  "version": "0.1.8",
+  "version": "1.0.0",
   "description": "Open a Hyper tab with the same directory as the current tab",
   "main": "index.js",
   "keywords": [
