@@ -1,4 +1,9 @@
 const { exec } = require('child_process');
+const { existsSync } = require('fs');
+const config = require('./config');
+const fixPath = require('./fixPath');
+
+const hypercwdConfig = config();
 
 let curCwd;
 let tabs = {};
@@ -43,6 +48,20 @@ const setCwd = (store, action, tabId, forceDispatch) => {
 
 exports.middleware = (store) => (next) => (action) => {
   switch (action.type) {
+    case 'CONFIG_LOAD': {
+      if (hypercwdConfig.initialWorkingDirectory) {
+        const initialWorkingDirectory = fixPath(hypercwdConfig.initialWorkingDirectory);
+        if (initialWorkingDirectory && existsSync(initialWorkingDirectory)) {
+          store.dispatch({
+            type: 'SESSION_SET_CWD',
+            cwd: initialWorkingDirectory,
+          });
+        } else {
+          console.error(`hypercwd: could not file initialWorkingDirectory path: ${hypercwdConfig.initialWorkingDirectory}`);
+        }
+      }
+      break;
+    }
     case 'SESSION_PTY_DATA':
       setCwd(store, action, action.uid);
       break;
