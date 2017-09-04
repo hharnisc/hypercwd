@@ -1,9 +1,7 @@
 const { exec } = require('child_process');
 const { existsSync } = require('fs');
-const config = require('./config');
+const configParse = require('./configParse');
 const fixPath = require('./fixPath');
-
-const hypercwdConfig = config();
 
 let curCwd;
 let tabs = {};
@@ -49,6 +47,7 @@ const setCwd = (store, action, tabId, forceDispatch) => {
 exports.middleware = (store) => (next) => (action) => {
   switch (action.type) {
     case 'CONFIG_LOAD': {
+      const hypercwdConfig = configParse(action.config);
       if (hypercwdConfig.initialWorkingDirectory) {
         const initialWorkingDirectory = fixPath(hypercwdConfig.initialWorkingDirectory);
         if (initialWorkingDirectory && existsSync(initialWorkingDirectory)) {
@@ -57,7 +56,7 @@ exports.middleware = (store) => (next) => (action) => {
             cwd: initialWorkingDirectory,
           });
         } else {
-          console.error(`hypercwd: could not file initialWorkingDirectory path: ${hypercwdConfig.initialWorkingDirectory}`);
+          console.error(`hypercwd: could not find initialWorkingDirectory path: ${hypercwdConfig.initialWorkingDirectory} - see https://github.com/hharnisc/hypercwd#configuration for configuration details`);
         }
       }
       break;

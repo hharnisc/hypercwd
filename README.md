@@ -10,22 +10,27 @@ Open ~/.hyper.js and add `hypercwd` to the list of plugins.
 
 ## Configuration
 
-`hypercwd` can be configured with a configuration file:
+`hypercwd` can be configured in `~/.hyper.js` configuration file within the `config` object:
 
 
-**OS X/Linux/Powershell**
+Example configuration:
 
-`~/.hypercwdrc.json`
+```js
+module.exports = {
+  config: {
+    // default font size for all tabs
+    fontSize: 14,
 
-**Windows**
+    // ... other config options
 
-`%userprofile%\.hypercwdrc.json`
-
-Example file:
-
-```json
-{
-  "initialWorkingDirectory": "~/Documents"
+    // add the hypercwd configuration object like this
+    hypercwd: {
+      initialWorkingDirectory: '~/Documents'
+    }
+  },
+  plugins: [
+    'hypercwd'
+  ]
 }
 ```
 
