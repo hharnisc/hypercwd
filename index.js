@@ -2,6 +2,10 @@ const { exec } = require('child_process');
 const { existsSync } = require('fs');
 const configParse = require('./configParse');
 const fixPath = require('./fixPath');
+const edgeTrigger = require('./edgeTrigger');
+
+// trigger function call on both start and stop (edge trigger)
+const edgeTriggerExec = edgeTrigger(exec, 500);
 
 let curCwd;
 let tabs = {};
@@ -27,7 +31,7 @@ const setCwd = (store, action, tabId, forceDispatch) => {
       tab.cwd = cwd;
     }
   } else {
-    exec(`lsof -p ${tab.pid} | grep cwd | tr -s ' ' | cut -d ' ' -f9-`, (err, newCwd) => {
+    edgeTriggerExec(`lsof -p ${tab.pid} | grep cwd | tr -s ' ' | cut -d ' ' -f9-`, (err, newCwd) => {
       if (err) {
         console.error(err);
       } else {
