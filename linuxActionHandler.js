@@ -22,8 +22,8 @@ module.exports = ({ getState, dispatch }) => next => async (action) => {
       }
       break;
     }
-    case 'SESSION_WILL_REQUEST':
-    case 'TERM_GROUP_WILL_REQUEST':
+    case 'SESSION_REQUEST':
+    case 'TERM_GROUP_REQUEST':
       const { sessions: { activeUid } } = getState();
       if (activeUid) {
         await setCwd({ dispatch, action, tab: tabs[activeUid]});
