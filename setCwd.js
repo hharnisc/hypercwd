@@ -22,7 +22,7 @@ const windowsSetCwd = ({ dispatch, action, tab, curTabId }) => {
   const newCwd = directoryRegex.exec(action.data);
   if (newCwd) {
     const cwd = newCwd[0];
-    if (tab.cwd !== cwd && tabId === curTabId) {
+    if (tab.cwd !== cwd && action.uid === curTabId) {
       dispatch({
         type: 'SESSION_SET_CWD',
         cwd,
