@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/hharnisc/hypercwd/issues"
   },
-  "homepage": "https://github.com/hharnisc/hypercwd#readme"
+  "homepage": "https://github.com/hharnisc/hypercwd#readme",
+  "dependencies": {
+    "util.promisify": "1.0.0"
+  }
 }
