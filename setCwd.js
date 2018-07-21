@@ -5,7 +5,7 @@ const promiseExec = promisify(exec);
 
 const setCwd = async ({ dispatch, action, tab }) => {
   const newCwd = await promiseExec(
-    `lsof -p ${tab.pid} | grep cwd | tr -s ' ' | cut -d ' ' -f9-`);
+    `LANG=en_US.UTF-8 lsof -p ${tab.pid} | grep cwd | tr -s ' ' | cut -d ' ' -f9-`);
   const cwd = newCwd.trim();
   dispatch({
     type: 'SESSION_SET_CWD',
