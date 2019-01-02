@@ -4,9 +4,9 @@ const { promisify } = require('util');
 const promiseExec = promisify(exec);
 
 const setCwd = async ({ dispatch, action, tab }) => {
-  const { stdout } = await promiseExec(
+  const newCwd = await promiseExec(
     `lsof -p ${tab.pid} | grep cwd | tr -s ' ' | cut -d ' ' -f9-`);
-  const cwd = stdout.trim();
+  const cwd = newCwd.trim();
   dispatch({
     type: 'SESSION_SET_CWD',
     cwd,
