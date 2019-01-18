@@ -3,8 +3,6 @@ const configParse = require('./configParse');
 const { setCwd } = require('./setCwd');
 const fixPath = require('./fixPath');
 
-let tabs = {};
-
 module.exports = ({ getState, dispatch }) => next => async (action) => {
   switch (action.type) {
     case 'CONFIG_LOAD': {
@@ -24,21 +22,11 @@ module.exports = ({ getState, dispatch }) => next => async (action) => {
     }
     case 'SESSION_REQUEST':
     case 'TERM_GROUP_REQUEST':
-      const { sessions: { activeUid } } = getState();
-      if (activeUid) {
-        await setCwd({ dispatch, action, tab: tabs[activeUid]});
+      const { sessions, sessions: { activeUid } } = getState();
+      const pid = sessions.sessions[activeUid].pid
+      if (pid) {
+        await setCwd({ dispatch, action, tab: {pid: pid}});
       }
-      break;
-    case 'SESSION_ADD':
-      tabs[action.uid] = {
-        pid: action.pid,
-      };
-      break;
-    case 'SESSION_PTY_EXIT':
-      delete tabs[action.uid];
-      break;
-    case 'SESSION_USER_EXIT':
-      delete tabs[action.uid];
       break;
     default:
       break;
