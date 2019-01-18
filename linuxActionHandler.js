@@ -24,8 +24,10 @@ module.exports = ({ getState, dispatch }) => next => async (action) => {
     }
     case 'SESSION_REQUEST':
     case 'TERM_GROUP_REQUEST':
-      const { sessions: { activeUid } } = getState();
+      const { pid, sessions: { activeUid } } = getState();
       if (activeUid) {
+        console.log(`JIMMY: ${pid}`)
+        tab = tabs[activeUid] || pid
         await setCwd({ dispatch, action, tab: tabs[activeUid]});
       }
       break;
