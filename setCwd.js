@@ -3,15 +3,14 @@ const { promisify } = require('util');
 
 const promiseExec = promisify(exec);
 
-const setCwd = async ({ dispatch, action, tab }) => {
-  const newCwd = await promiseExec(
-    `lsof -p ${tab.pid} | grep cwd | tr -s ' ' | cut -d ' ' -f9-`);
-  // Since Node v8, return type of a promisified exec has changed: 
-  // https://github.com/nodejs/node/commit/fe5ca3ff27 
-  const cwd = typeof newCwd === 'string' ? newCwd.trim() : newCwd.stdout.trim();
-  dispatch({
-    type: 'SESSION_SET_CWD',
-    cwd,
+const setCwd = ({dispatch, action, tab}) => {
+  return promiseExec(
+    `LANG=en_US.utf-8 lsof -n -p ${
+      tab.pid
+    } | grep cwd | tr -s ' ' | cut -d ' ' -f9-`
+  ).then((newCwd) => {
+    const cwd = (newCwd.stdout || newCwd).trim();
+    dispatch({type: "SESSION_SET_CWD", cwd});
   });
 };
 
