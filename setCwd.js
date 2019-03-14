@@ -5,7 +5,7 @@ const promiseExec = promisify(exec);
 
 const setCwd = async ({ dispatch, action, tab }) => {
   const newCwd = await promiseExec(
-    `lsof -p ${tab.pid} | grep cwd | tr -s ' ' | cut -d ' ' -f9-`);
+    `lsof -a -p ${tab.pid} -d cwd -Fn | tail -1 | sed 's/.//'`);
   // Since Node v8, return type of a promisified exec has changed: 
   // https://github.com/nodejs/node/commit/fe5ca3ff27 
   const cwd = typeof newCwd === 'string' ? newCwd.trim() : newCwd.stdout.trim();
