@@ -1,5 +1,5 @@
 const { exec } = require('child_process');
-const { promisify } = require('util');
+const promisify = require('util.promisify');
 
 const promiseExec = promisify(exec);
 
