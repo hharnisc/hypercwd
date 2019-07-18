@@ -13,6 +13,8 @@ Open ~/.hyper.js and add `hypercwd` to the list of plugins.
 ## Configuration
 
 `hypercwd` can be configured in `~/.hyper.js` configuration file within the `config` object:
+  - On Windows, the `.hyper.js` is located in `C:\Users\{userName}\AppData\Roaming\Hyper`.
+  - Alternatively, while in Hyper, press <kbd>CTRL</kbd>+<kbd>,</kbd> on Windows and  <kbd>CMND</kbd>+<kbd>,</kbd> on OSX to open the configuration file.
 
 
 Example configuration:
